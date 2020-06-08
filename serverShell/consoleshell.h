@@ -42,8 +42,7 @@ private:
 
     void sendData();
     void downScroll();
-    void setFontConsole(int size);
-    void clientDisconnect();
+    void setFontConsole(int size);    
     void setInfoClient();
     void setCursorEnd();
     QString parseLine();
@@ -51,6 +50,7 @@ private:
     void historyEnd();
     void historyAdd(const QString &cmd);
     void clearLine();
+    void restartClient();
 
 public slots:
     void setAddressServer(const QString &address, quint16 port);

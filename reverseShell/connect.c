@@ -97,7 +97,7 @@ int send_data(int s){
     int active;
     int byte = 0;
     int fd;
-    char buf[256] = {'\0'};
+    char buf[OUTPUT_BUF];
     char output[OUTPUT_BUF];
     char **cmd = NULL;
     bool loop = true;
@@ -112,7 +112,8 @@ int send_data(int s){
             loop = false;
         if(FD_ISSET(s, &read_fd)){
             if(get_error_socket(s, &errno) == 0 && errno == 0){
-                byte = read(s, buf, sizeof(buf));
+                byte = read(s, buf, OUTPUT_BUF - 1);
+                buf[byte] = '\0';
                 switch(byte){
                     case 0 :
                         close(s);
@@ -121,16 +122,15 @@ int send_data(int s){
                         loop = false;
                         break;
                     default :
-                        buf[byte] = '\0';
                         if((cmd = parse_command(buf)) != NULL){
                             if(strcmp(cmd[0], "cd") == 0){
                                 changed_dirs(cmd[1]);
                                 break;
                             }
-                            else if(strcmp(cmd[0], "dd") == 0)
+                            else if(strcmp(cmd[0], "dd") == 0 || strcmp(cmd[0], "as") == 0)
                                 break;
                             else if((fd = shell(cmd))!= EOF){
-                                while((byte = read(fd, output, OUTPUT_BUF)) != 0){
+                                while((byte = read(fd, output, OUTPUT_BUF - 1)) != 0){
                                     if(byte == EOF)
                                         break;
                                     output[byte] = '\0';

@@ -10,6 +10,7 @@ ConsoleShell::ConsoleShell(QWidget *parent) : QTextEdit(parent){
     setReadOnly(true);
     lenPrompt = 0;
     pos = 0;
+    moveCursor(QTextCursor::NoMove, QTextCursor::MoveAnchor);
     serverSock = new QTcpServer(this);
     connect(serverSock, SIGNAL(newConnection()), this, SLOT(clientConnect()));
 }
@@ -29,14 +30,16 @@ void ConsoleShell::setFontConsole(int size){
 
 void ConsoleShell::contextMenuEvent(QContextMenuEvent *){}
 
-void ConsoleShell::mouseDoubleClickEvent(QMouseEvent *){
-}
+void ConsoleShell::mouseDoubleClickEvent(QMouseEvent *){}
 
-void ConsoleShell::mouseMoveEvent(QMouseEvent *){
-}
+void ConsoleShell::mouseMoveEvent(QMouseEvent *){}
 
 void ConsoleShell::mousePressEvent(QMouseEvent *){
     setFocus();
+    QTextCursor cur = textCursor();
+    if(cur.hasSelection())
+        cur.clearSelection();
+    setTextCursor(cur);
 }
 
 void ConsoleShell::keyPressEvent(QKeyEvent *e){
@@ -57,8 +60,8 @@ void ConsoleShell::keyPressEvent(QKeyEvent *e){
     if((e->key() == Qt::Key_Backspace && textCursor().positionInBlock() > lenPrompt) || e->key() == Qt::Key_Delete)
         QTextEdit::keyPressEvent(e);
 
-    if(e->key() == Qt::Key_C && e->modifiers())
-        clientDisconnect();
+    if(e->key() == Qt::Key_C && e->modifiers() == Qt::ControlModifier)
+        restartClient();
 
     if(e->key() == Qt::Key_Home && e->modifiers() == Qt::NoModifier && textCursor().positionInBlock() > lenPrompt){
         QTextCursor cur = textCursor();
@@ -108,10 +111,8 @@ void ConsoleShell::historyBegin(){
         insertPlainText(saveCommand.at(pos));
         pos++;
     }
-    else{
+    else
         clearLine();
-    }
-
 }
 
 void ConsoleShell::historyEnd(){
@@ -140,7 +141,7 @@ void ConsoleShell::clearLine(){
     setTextCursor(cursor);
 }
 
-void ConsoleShell::clientDisconnect(){
+void ConsoleShell::restartClient(){
     if(clientSock != nullptr && clientSock->state() == QAbstractSocket::ConnectedState){
         setCursorEnd();
         insertPlainText("\n");
@@ -160,6 +161,7 @@ void ConsoleShell::setAddressServer(const QString &address, const quint16 port){
     else
         serverSock->listen(QHostAddress(address), port);
 }
+
 
 void ConsoleShell::clientConnect(){
     clientSock = serverSock->nextPendingConnection();

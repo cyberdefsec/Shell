@@ -10,13 +10,14 @@ Requests
 install
 =======
 
-	git clone https://github.com/ErilinAleksei/reverseShell.git
-	cd /reverseShell	
-	make
-	make install
+	git clone https://github.com/ErilinAleksei/Shell.git
+	cd /Shell/serverShell
+	qmake serverShell.pro
+	sudo make install
+	
+Contacts
+========
 
-Using
-=====
+	email: makentosh1@mail.ru
+	URL: https://github.com/ErilinAleksei
 
-	EXAMPLES:
-		reverseShell 192.168.10.150 2035

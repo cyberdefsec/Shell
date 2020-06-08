@@ -34,5 +34,6 @@ private slots:
 
 signals:
     void setupServer(const QString &address, quint16 port);
+
 };
 #endif // SERVER_H

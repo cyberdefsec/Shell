@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>ico/server.png</file>
+        <file>ico/serverShell.png</file>
     </qresource>
 </RCC>

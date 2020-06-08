@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=serverShell
+Comment=The server shell for remote access
+Comment[ru]=Сервер оболочка для удалённого доступа
+Exec=/usr/local/bin/serverShell %F
+Icon=/usr/share/icons/hicolor/128x128/apps/serverShell.png
+Terminal=false
+Categories=Network;
+StartupNotify=true

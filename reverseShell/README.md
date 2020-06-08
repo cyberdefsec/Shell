@@ -10,8 +10,8 @@ Requests
 install
 =======
 
-	git clone https://github.com/ErilinAleksei/reverseShell.git
-	cd /reverseShell	
+	git clone https://github.com/ErilinAleksei/Shell.git
+	cd /Shell/reverseShell
 	make
 	make install
 
