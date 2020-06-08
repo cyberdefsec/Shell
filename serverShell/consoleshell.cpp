@@ -10,7 +10,6 @@ ConsoleShell::ConsoleShell(QWidget *parent) : QTextEdit(parent){
     setReadOnly(true);
     lenPrompt = 0;
     pos = 0;
-    moveCursor(QTextCursor::NoMove, QTextCursor::MoveAnchor);
     serverSock = new QTcpServer(this);
     connect(serverSock, SIGNAL(newConnection()), this, SLOT(clientConnect()));
 }
@@ -121,9 +120,8 @@ void ConsoleShell::historyEnd(){
         insertPlainText(saveCommand.at(pos - 1));
         pos--;
     }
-    else{
+    else
         clearLine();
-    }
 }
 
 void ConsoleShell::historyAdd(const QString &cmd){
