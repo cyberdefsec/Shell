@@ -1,0 +1,17 @@
+# depslib dependency file v1.0
+1613677675 source:c:\remote\windows\connect.c
+
+1613679197 source:c:\remote\windows\execshell.c
+	"execShell.h"
+
+1613680483 c:\remote\windows\execshell.h
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	<string.h>
+
+1613680631 source:c:\remote\windows\reverseshell.c
+	<stdio.h>
+	<stdlib.h>
+	"execShell.h"
+
