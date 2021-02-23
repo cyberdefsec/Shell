@@ -6,16 +6,17 @@
 #include <windows.h>
 #include <string.h>
 #include <stdbool.h>
+#include <io.h>
 
 #define LEN_BUF 1024
 #define LEN_PROMT 512
 
-void shell(char *cmd);
+void shell(SOCKET s, char *cmd);
 
 bool isChangeDir(const char *cmd);
 
 bool changeDir(char *path);
 
-void currentPromtPrint(void);
+void promtPrint(SOCKET s);
 
 #endif // __EXECSHELL_H__

