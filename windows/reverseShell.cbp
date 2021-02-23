@@ -31,7 +31,15 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="main.c">
+		<Unit filename="connect.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="connect.h" />
+		<Unit filename="execShell.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="execShell.h" />
+		<Unit filename="reverseShell.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

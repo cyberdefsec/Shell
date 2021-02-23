@@ -5,13 +5,17 @@
 #include <stdlib.h>
 #include <windows.h>
 #include <string.h>
+#include <stdbool.h>
 
-#define LEN_DIR 256
-#define PATH_SHELL "C:\\Windows\\System32\\cmd.exe"
-INT shell(CHAR **args);
+#define LEN_BUF 1024
+#define LEN_PROMT 512
 
-CHAR **parserCommand(CHAR *cmd);
+void shell(char *cmd);
 
-BOOL changeDirs(CONST CHAR *path);
+bool isChangeDir(const char *cmd);
+
+bool changeDir(char *path);
+
+void currentPromtPrint(void);
 
 #endif // __EXECSHELL_H__
