@@ -12,7 +12,7 @@ install
 
 	git clone https://github.com/ErilinAleksei/Shell.git
 	cd /Shell/reverseShell
-	make
+	make makefile
 	make install
 
 Using
