@@ -10,8 +10,9 @@
 
 #define LEN_BUF 1024
 #define LEN_PROMT 512
+#define SHELL_NAME "cmd.exe"
 
-void shell(SOCKET s, char *cmd);
+void shell(SOCKET s);
 
 bool isChangeDir(const char *cmd);
 
