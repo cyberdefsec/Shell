@@ -15,8 +15,10 @@ ConsoleShell::ConsoleShell(QWidget *parent) : QTextEdit(parent){
 }
 
 ConsoleShell::~ConsoleShell(){
-    if(clientSock != nullptr && clientSock->state() == QAbstractSocket::ConnectedState)
-        clientSock->close();
+    if(clientSock != nullptr && clientSock->state() == QAbstractSocket::ConnectedState){
+         clientSock->close();
+         serverSock->close();
+    }
 }
 
 void ConsoleShell::setFontConsole(int size){
@@ -78,7 +80,7 @@ void ConsoleShell::keyPressEvent(QKeyEvent *e){
 
 void ConsoleShell::sendData(){
     QString cmd;
-    if(clientSock != nullptr && clientSock->state() == QAbstractSocket::ConnectedState){
+    if(clientSock->state() == QAbstractSocket::ConnectedState){
         cmd = parseLine();
         historyAdd(cmd);
         if(cmd == "clear"){
@@ -88,8 +90,10 @@ void ConsoleShell::sendData(){
         else
             clientSock->write(cmd.toLocal8Bit());
     }
-    else
+    else{
+        serverSock->close();
         QDEBUG(<< "No connect client");
+    }
 }
 
 QString ConsoleShell::parseLine(){
@@ -169,6 +173,16 @@ void ConsoleShell::clientConnect(){
     connect(clientSock, SIGNAL(readyRead()), this, SLOT(readData()));
 }
 
+void ConsoleShell::clientDisconnect(){
+    if(clientSock != nullptr && clientSock->state() == QAbstractSocket::ConnectedState){
+        setReadOnly(true);
+        clear();
+        clientSock->disconnectFromHost();
+        connect(clientSock, SIGNAL(disconnected()), clientSock, SLOT(deleteLater()));
+        serverSock->close();
+    }
+}
+
 void ConsoleShell::setInfoClient(){
     QString ip;
     infoClient.port = clientSock->peerPort();
@@ -186,6 +200,10 @@ void ConsoleShell::readData(){
             insertPlainText(QString(clientSock->readAll()));
             downScroll();
         }
+    }
+    else {
+        clientSock->disconnectFromHost();
+        clientSock->close();
     }
 }
 

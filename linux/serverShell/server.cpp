@@ -22,7 +22,13 @@ Server::Server(QWidget *parent) : QWidget(parent){
     btnStart->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
     layout->addWidget(btnStart);
 
+    btnStop = new QPushButton(tr("Stop server"), this);
+    btnStop->setEnabled(false);
+    btnStop->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    layout->addWidget(btnStop);
+
     connect(btnStart, SIGNAL(clicked()), this, SLOT(startServer()));
+    connect(btnStop, SIGNAL(clicked()), this, SLOT(stopServer()));
 }
 
 void Server::startServer(){
@@ -30,10 +36,19 @@ void Server::startServer(){
         lineAddr->setEnabled(false);
         linePort->setEnabled(false);
         btnStart->setEnabled(false);
+        btnStop->setEnabled(true);
         emit setupServer(lineAddr->text(), linePort->text().toUShort());
     }
     else{
         QMessageBox::warning(this, nullptr, tr("Enter ip address and port"), QMessageBox::Ok);
         lineAddr->setFocus();
     }
+}
+
+void Server::stopServer(){
+    lineAddr->setEnabled(true);
+    linePort->setEnabled(true);
+    btnStart->setEnabled(true);
+    btnStop->setEnabled(false);
+    emit shutdown();
 }

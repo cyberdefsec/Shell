@@ -36,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent){
     addToolBar(Qt::BottomToolBarArea, toolBar);
 
     connect(server, SIGNAL(setupServer(const QString&, quint16)), consoleShell, SLOT(setAddressServer(const QString&, quint16)));
+    connect(server, SIGNAL(shutdown()), consoleShell, SLOT(clientDisconnect()));
     connect(consoleShell, SIGNAL(clientInfo(const InfoClient &)), this, SLOT(setInfoClient(const InfoClient &)));
 }
 

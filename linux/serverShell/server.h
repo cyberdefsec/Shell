@@ -26,14 +26,17 @@ private:
     QLabel *labPort = nullptr;
     QLineEdit *linePort = nullptr;
     QPushButton *btnStart = nullptr;
+    QPushButton *btnStop = nullptr;
     QString addr;
     uint16_t port;
 
 private slots:
     void startServer();
+    void stopServer();
 
 signals:
     void setupServer(const QString &address, quint16 port);
+    void shutdown();
 
 };
 #endif // SERVER_H

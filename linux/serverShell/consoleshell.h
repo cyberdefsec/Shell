@@ -57,6 +57,7 @@ public slots:
 
 private slots:
     void clientConnect();
+    void clientDisconnect();
     void readData();
 
 signals:
