@@ -26,10 +26,6 @@ int main(int argc, char **argv){
             while(true){
                 if((s = connectServer(ipaddr, port)) != SOCKET_ERROR)
                     shell(s);
-                else{
-                    closeServer(s);
-                    wsaInit();
-                }
             }
         }
     }
