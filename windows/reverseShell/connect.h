@@ -7,10 +7,10 @@
 #include <winsock2.h>
 #include <ws2tcpip.h>
 
-int wsaInit(void);
+int wsa_init(void);
 
-SOCKET connectServer(const char *ipaddr, uint16_t port);
+SOCKET connect_to_server(const char *ipaddr, uint16_t port);
 
-void closeServer(SOCKET s);
+void close_server(SOCKET s);
 
 #endif // __CONNECT_H__
