@@ -9,9 +9,9 @@
 int main(int argc, char **argv){
     int s;
     if(argc == 3){
-		if((s = connect_to_server(argv[1], atoi(argv[2]))) != EOF)
+	if((s = connect_to_server(argv[1], atoi(argv[2]))) != EOF)
             shell(s);
-		close(s);
-	}        
+	close(s);
+    }        
     return 0;
 }
