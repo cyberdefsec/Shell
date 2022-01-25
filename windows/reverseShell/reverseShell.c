@@ -12,9 +12,9 @@ int main(int argc, char **argv){
     FreeConsole();
     if(argc == 3){
         wsa_init();             
-		if((s = connect_to_server(argv[1], atoi(argv[2]))) != SOCKET_ERROR)
-			shell(s);
-		close_server(s);
+	if((s = connect_to_server(argv[1], atoi(argv[2]))) != SOCKET_ERROR)
+		shell(s);
+	close_server(s);
     }
     return 0;
 }
