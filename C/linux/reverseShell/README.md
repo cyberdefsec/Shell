@@ -10,7 +10,7 @@ Requests
 install
 =======
 
-	git clone https://github.com/ErilinAleksei/Shell.git
+	git clone https://github.com/CyberSecurityDef/Shell.git
 	cd /Shell/reverseShell
 	make makefile
 	make install
