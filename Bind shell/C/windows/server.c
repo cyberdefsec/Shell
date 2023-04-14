@@ -1,4 +1,4 @@
-#include "connect.h"
+#include "server.h"
 
 static char *get_addr_by_name(const char *name){
     struct hostent *hst = NULL;
@@ -14,16 +14,20 @@ int wsa_init(void){
     return SOCKET_ERROR;
 }
 
-SOCKET connect_to_server(const char *ipaddr, uint16_t port){
-    SOCKET s;
+SOCKET bind_server(const char *ipaddr, uint16_t port){
+    SOCKET s = 0;
+    SOCKET client = 0;
     struct sockaddr_in sin;
     memset(&sin, '\0', sizeof(sin));
     if((s = WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0, 0)) != SOCKET_ERROR){
         sin.sin_addr.S_un.S_addr = inet_addr(get_addr_by_name(ipaddr));
         sin.sin_family = AF_INET;
         sin.sin_port = htons(port);
-        if(WSAConnect(s, (const struct sockaddr*)&sin, sizeof(sin), NULL, NULL, NULL, NULL) != SOCKET_ERROR)
-            return s;
+        if(bind(s, (struct sockaddr*)&sin, sizeof(sin)) != SOCKET_ERROR){
+            listen(s, 1);
+            if((client = accept(s, NULL, NULL)) != SOCKET_ERROR)
+                return client;
+        }
     }
     return SOCKET_ERROR;
 }

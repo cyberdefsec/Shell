@@ -4,15 +4,15 @@
 #include <winsock2.h>
 
 #include "execShell.h"
-#include "connect.h"
+#include "server.h"
 
 int main(int argc, char **argv){
-    SOCKET s = 0;  
+    SOCKET s = 0;
     setlocale(LC_ALL, "rus");
     FreeConsole();
     if(argc == 3){
-        wsa_init();             
-	if((s = connect_to_server(argv[1], atoi(argv[2]))) != SOCKET_ERROR)
+        wsa_init();
+	if((s = bind_server(argv[1], atoi(argv[2]))) != SOCKET_ERROR)
 		shell(s);
 	close_server(s);
     }

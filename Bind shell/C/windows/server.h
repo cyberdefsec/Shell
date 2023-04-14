@@ -9,7 +9,7 @@
 
 int wsa_init(void);
 
-SOCKET connect_to_server(const char *ipaddr, uint16_t port);
+SOCKET bind_server(const char *ipaddr, uint16_t port);
 
 void close_server(SOCKET s);
 
