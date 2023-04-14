@@ -1,5 +1,5 @@
-#ifndef __CONNECT_H__
-#define __CONNECT_H__
+#ifndef __SERVER_H__
+#define __SERVER_H__
 
 #include <netinet/in.h>
 

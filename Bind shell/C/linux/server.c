@@ -15,7 +15,7 @@
 #include <arpa/inet.h>
 #include <net/if.h>
 
-#include "connect.h"
+#include "server.h"
 
 static char *get_addr_by_name(const char *name){
     struct hostent *hst = NULL;
@@ -25,15 +25,19 @@ static char *get_addr_by_name(const char *name){
     return NULL;
 }
 
-int connect_to_server(const char *addr, uint16_t port){
+int bind_server(const char *addr, uint16_t port){
     int s = 0;
+	int client = 0;
     struct sockaddr_in sin;
     if((s = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) != EOF){
         sin.sin_family = AF_INET;
         sin.sin_port = htons(port);
         sin.sin_addr.s_addr = inet_addr(get_addr_by_name(addr));
-        if(connect(s, (const struct sockaddr*)&sin, sizeof(sin)) != EOF)
-            return s;
+        if(bind(s, (struct sockaddr*)&sin, sizeof(sin)) != EOF){
+			listen(s, 1);
+			if((client = accept(s, NULL, NULL)) != EOF)
+				return client;
+		}
     }
     return EOF;
 }
