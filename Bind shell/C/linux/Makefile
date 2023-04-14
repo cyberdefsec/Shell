@@ -1,22 +1,22 @@
-TARGET = reverseShell
+TARGET = bindShell
 PREFIX = /sbin
 CFLAGS = -Wall -Wextra
 CC = gcc
-OBJECTS = reverseShell.o execShell.o connect.o 
+OBJECTS = bindShell.o execShell.o server.o 
 
 all: $(TARGET)
 
 $(TARGET): $(OBJECTS)
 	$(CC) $(OBJECTS) -o $(TARGET)	
 	
-reverseShell.o: reverseShell.c
-	$(CC) $(CFLAGS) -c reverseShell.c
+reverseShell.o: bindShell.c
+	$(CC) $(CFLAGS) -c bindShell.c
 
 execShell.o: execShell.c execShell.h
 	$(CC) $(CFLAGS) -c execShell.c
 	
-connect.o: connect.c connect.h
-	$(CC) $(CFLAGS) -c connect.c
+server.o: server.c server.h
+	$(CC) $(CFLAGS) -c server.c
 	
 clean:
 	rm -rf *.o $(TARGET)
